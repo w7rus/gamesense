@@ -142,6 +142,29 @@ function func_esp_clamptoscreen(mediaScreenWidth, mediaScreenHeight, mediaScreen
 end
 function func_esp_rainbowize(a,b,c,d,e,f,g)local h,i,j=math.cos(a*(f+g))*b+math.floor(b/2),math.cos(a*(f+g)+2*math.pi/3*c)*b+math.floor(b/2),math.cos(a*(f+g)-2*math.pi/3*c)*b+math.floor(b/2)if h<d then h=d end;if j<d then j=d end;if i<d then i=d end;if h>e then h=e end;if j>e then j=e end;if i>e then i=e end;return {h,i,j} end
 
+local rotate = function(pitch, yaw, roll, nodes)
+    for i = 1, #nodes do
+        local vec = maf.vec3(nodes[i].x, nodes[i].y, nodes[i].z)
+
+        local p, y, r = .5 * math.rad(pitch), .5 * math.rad(yaw), .5 * math.rad(roll)
+        local cx = math.cos(p)
+        local sx = math.sin(p)
+        local cy = math.cos(y)
+        local sy = math.sin(y)
+        local cz = math.cos(r)
+        local sz = math.sin(r)
+
+        local x = sx * cy * cz - cx * sy * sz
+        local y = cx * sy * cz + sx * cy * sz
+        local z = cx * cy * sz - sx * sy * cz
+        local w = cx * cy * cz + sx * sy * sz
+
+        local rot = maf.quat(x, z, y, w)
+        vec:rotate(rot)
+        nodes[i] = vec
+    end
+end
+
 function func_esp_drawSnapLine(entIndex_serverEntCAny, accentColor01, accentColor02, i_esp_anchorPosX, i_esp_anchorPosY)
     local obj_serverEntCAny = Entity(entIndex_serverEntCAny)
     local obj_localEntCCSPlayer = Player(entIndex_localEntCCSPlayer)
