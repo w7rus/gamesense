@@ -1,9 +1,9 @@
 -- [About]------------------------------------------------------------------------------------------------------------------------------------------------------
--- Made by: w7rus (Astolfo)
+-- Made by w7rus (Astolfo)
 
 -- [Configuration] --------------------------------------------------------------- [Description] ---------------------------------------------------------------
 
-    b_hitsounds_enable                                    = 1                 -- <0/1> Register callbacks and allow listeners (Script master switch)
+    b_hitsounds_enable                                      = 1                 -- <true/false> Master Switch
 
     b_hitsounds_ePlayerHurt                                 = 1                 -- <0/1> Filter playerHurt event
     b_hitsounds_ePlayerDeath                                = 1                 -- <0/1> Filter playerDeath event
@@ -72,7 +72,7 @@ function func_hitindicators_event_playerConnectFull(event)
     entIndex_localEntCCSPlayer = entity.get_local_player();
 end
 
-if b_hitsounds_enable == 1 then
+if b_hitsounds_enable then
     client.set_event_callback("player_hurt", func_hitsounds_event_playerHurt)
     client.set_event_callback("player_death", func_hitsounds_event_playerDeath)
     client.set_event_callback("player_connect_full", func_hitindicators_event_playerConnectFull)

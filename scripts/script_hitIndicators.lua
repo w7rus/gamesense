@@ -1,5 +1,5 @@
 -- [About]------------------------------------------------------------------------------------------------------------------------------------------------------
--- Made by: w7rus (Astolfo)
+-- Made by w7rus (Astolfo)
 
 -- [Configuration] --------------------------------------------------------------- [Description] ---------------------------------------------------------------
 
@@ -10,30 +10,30 @@
     b_hitindicators_ePlayerDeath_kHeadshot                  = 1                 -- <0/1> Filter playerDeath event headshot int
     b_hitindicators_ePlayerDeath_kPenetrated                = 1                 -- <0/1> Filter playerDeath event penetrated int
 
-    f_hitindicators_drawStartAlpha                          = 255.0             -- <0.0 ... 255.0> Start alpha of hit indicators
-    f_hitindicators_drawEndAlpha                            = 0.0               -- <0.0 ... 255.0> End alpha of hit indicators
-    f_hitindicators_drawLifetime                            = 1                 -- <0.0 ... +inf> Lifetime of hit indicators for constant framerate.
-    f_hitindicators_drawScreenX                             = 0.5               -- <0.0 ... 1.0> Screen horizontal offset (in %).
-    f_hitindicators_drawScreenY                             = 0.5               -- <0.0 ... 1.0> Screen vertical offset (in %).
-    f_hitindicators_drawSizeX                               = 32                -- <0.0 ... 1.0> Screen vertical offset (in px).
-    f_hitindicators_drawSizeY                               = 32                -- <0.0 ... 1.0> Screen vertical offset (in px).
+    i_hitindicators_drawStartAlpha                          = 255               -- <0 ... 255> Start alpha of hit indicators
+    i_hitindicators_drawEndAlpha                            = 0                 -- <0 ... 255> End alpha of hit indicators
+    f_hitindicators_drawLifetime                            = 1                 -- <0.0 ... +inf> Lifetime of hit indicators for constant framerate //TODO: Rework the method of fading ((curTime - eventTime)/lifetime as percentage)
+    f_hitindicators_drawScreenX                             = 0.5               -- <0.0 ... 1.0> Screen horizontal offset (in %)
+    f_hitindicators_drawScreenY                             = 0.5               -- <0.0 ... 1.0> Screen vertical offset (in %)
+    i_hitindicators_drawSizeX                               = 32                -- <0 ... min(client.screen_size().x)> Screen vertical offset (in px.)
+    i_hitindicators_drawSizeY                               = 32                -- <0 ... min(client.screen_size().y)> Screen vertical offset (in px.)
 
-    i_hitindicators_ePlayerHurt_drawColorRed                = 255.0             -- <0.0 ... 255.0> playerHurt event hit indicators color channel red
-    i_hitindicators_ePlayerHurt_drawColorGreen              = 255.0             -- <0.0 ... 255.0> playerHurt event hit indicators color channel green
-    i_hitindicators_ePlayerHurt_drawColorBlue               = 255.0             -- <0.0 ... 255.0> playerHurt event hit indicators color channel blue
-    i_hitindicators_ePlayerHurt_drawColorAlpha              = 255.0             -- <0.0 ... 255.0> playerHurt event hit indicators color channel alpha
-    i_hitindicators_ePlayerDeath_drawColorRed               = 0.0               -- <0.0 ... 255.0> playerDeath event hit indicators color channel red
-    i_hitindicators_ePlayerDeath_drawColorGreen             = 255.0             -- <0.0 ... 255.0> playerDeath event hit indicators color channel green
-    i_hitindicators_ePlayerDeath_drawColorBlue              = 127.0             -- <0.0 ... 255.0> playerDeath event hit indicators color channel blue
-    i_hitindicators_ePlayerDeath_drawColorAlpha             = 255.0             -- <0.0 ... 255.0> playerDeath event hit indicators color channel alpha
-    i_hitindicators_ePlayerDeath_kHeadshot_drawColorRed     = 255.0             -- <0.0 ... 255.0> playerDeath event headshot int hit indicators color channel red
-    i_hitindicators_ePlayerDeath_kHeadshot_drawColorGreen   = 255.0             -- <0.0 ... 255.0> playerDeath event headshot int hit indicators color channel green
-    i_hitindicators_ePlayerDeath_kHeadshot_drawColorBlue    = 0.0               -- <0.0 ... 255.0> playerDeath event headshot int hit indicators color channel blue
-    i_hitindicators_ePlayerDeath_kHeadshot_drawColorAlpha   = 255.0             -- <0.0 ... 255.0> playerDeath event headshot int hit indicators color channel alpha
-    i_hitindicators_ePlayerDeath_kPenetrated_drawColorRed   = 0.0               -- <0.0 ... 255.0> playerDeath event penetrated int hit indicators color channel red
-    i_hitindicators_ePlayerDeath_kPenetrated_drawColorGreen = 175.0             -- <0.0 ... 255.0> playerDeath event penetrated int hit indicators color channel green
-    i_hitindicators_ePlayerDeath_kPenetrated_drawColorBlue  = 255.0             -- <0.0 ... 255.0> playerDeath event penetrated int hit indicators color channel blue
-    i_hitindicators_ePlayerDeath_kPenetrated_drawColorAlpha = 255.0             -- <0.0 ... 255.0> playerDeath event penetrated int hit indicators color channel alpha
+    i_hitindicators_ePlayerHurt_drawColorRed                = 255.0             -- <0 ... 255> playerHurt event hit indicators color channel red
+    i_hitindicators_ePlayerHurt_drawColorGreen              = 255.0             -- <0 ... 255> playerHurt event hit indicators color channel green
+    i_hitindicators_ePlayerHurt_drawColorBlue               = 255.0             -- <0 ... 255> playerHurt event hit indicators color channel blue
+    i_hitindicators_ePlayerHurt_drawColorAlpha              = 255.0             -- <0 ... 255> playerHurt event hit indicators color channel alpha
+    i_hitindicators_ePlayerDeath_drawColorRed               = 0.0               -- <0 ... 255> playerDeath event hit indicators color channel red
+    i_hitindicators_ePlayerDeath_drawColorGreen             = 255.0             -- <0 ... 255> playerDeath event hit indicators color channel green
+    i_hitindicators_ePlayerDeath_drawColorBlue              = 127.0             -- <0 ... 255> playerDeath event hit indicators color channel blue
+    i_hitindicators_ePlayerDeath_drawColorAlpha             = 255.0             -- <0 ... 255> playerDeath event hit indicators color channel alpha
+    i_hitindicators_ePlayerDeath_kHeadshot_drawColorRed     = 255.0             -- <0 ... 255> playerDeath event headshot int hit indicators color channel red
+    i_hitindicators_ePlayerDeath_kHeadshot_drawColorGreen   = 255.0             -- <0 ... 255> playerDeath event headshot int hit indicators color channel green
+    i_hitindicators_ePlayerDeath_kHeadshot_drawColorBlue    = 0.0               -- <0 ... 255> playerDeath event headshot int hit indicators color channel blue
+    i_hitindicators_ePlayerDeath_kHeadshot_drawColorAlpha   = 255.0             -- <0 ... 255> playerDeath event headshot int hit indicators color channel alpha
+    i_hitindicators_ePlayerDeath_kPenetrated_drawColorRed   = 0.0               -- <0 ... 255> playerDeath event penetrated int hit indicators color channel red
+    i_hitindicators_ePlayerDeath_kPenetrated_drawColorGreen = 175.0             -- <0 ... 255> playerDeath event penetrated int hit indicators color channel green
+    i_hitindicators_ePlayerDeath_kPenetrated_drawColorBlue  = 255.0             -- <0 ... 255> playerDeath event penetrated int hit indicators color channel blue
+    i_hitindicators_ePlayerDeath_kPenetrated_drawColorAlpha = 255.0             -- <0 ... 255> playerDeath event penetrated int hit indicators color channel alpha
 
     b_hitindicators_drawDebug                               = 0                 -- <0/1> Draw debug info
 
@@ -41,7 +41,7 @@
 -- [Calculated configuration] ----------------------------------------------------------------------------------------------------------------------------------
 
     entIndex_localEntCCSPlayer                              = entity.get_local_player()
-    f_hitindicators_drawRangeAlpha                          = f_hitindicators_drawStartAlpha - f_hitindicators_drawEndAlpha
+    f_hitindicators_drawRangeAlpha                          = i_hitindicators_drawStartAlpha - i_hitindicators_drawEndAlpha
     f_hitindicators_drawCurrentAlpha                        = nil
     f_hitindicators_e_timestamp                             = nil
     i_hitindicators_e_index                                 = nil
@@ -83,7 +83,7 @@ function func_hitindicators_draw()
                 renderer.text(8, 48 + i_hitindicators_drawPosY, 255, 255, 255, 255, nil, 0, "Alpha: " .. string.format("%3d", f_hitindicators_drawCurrentAlpha))
             end
 
-            if f_hitindicators_drawStartAlpha > f_hitindicators_drawEndAlpha and f_hitindicators_drawCurrentAlpha <= f_hitindicators_drawStartAlpha and f_hitindicators_drawCurrentAlpha >= f_hitindicators_drawEndAlpha then
+            if i_hitindicators_drawStartAlpha > i_hitindicators_drawEndAlpha and f_hitindicators_drawCurrentAlpha <= i_hitindicators_drawStartAlpha and f_hitindicators_drawCurrentAlpha >= i_hitindicators_drawEndAlpha then
                 --
                 --
                 --  eventPlayerHurt
@@ -92,7 +92,7 @@ function func_hitindicators_draw()
                 if bit.band(i_hitindicators_e_index, 1) == 1 then
                     local i_hitindicators_ePlayerHurt_strSizeX, i_hitindicators_ePlayerHurt_strSizeY = renderer.measure_text("+", string.format("%d (%d)", i_hitindicators_ePlayerHurt_kDmg_Health, i_hitindicators_ePlayerHurt_kHealth))
 
-                    renderer.text(i_hitindicators_drawPosX + f_hitindicators_drawSizeX, i_hitindicators_drawPosY - i_hitindicators_ePlayerHurt_strSizeY / 2, i_hitindicators_ePlayerHurt_drawColorRed, i_hitindicators_ePlayerHurt_drawColorGreen, i_hitindicators_ePlayerHurt_drawColorBlue, math.floor(f_hitindicators_drawCurrentAlpha * i_hitindicators_ePlayerHurt_drawColorAlpha / 255), "+", 0, string.format("%d [%d]", i_hitindicators_ePlayerHurt_kDmg_Health, i_hitindicators_ePlayerHurt_kHealth))
+                    renderer.text(i_hitindicators_drawPosX + i_hitindicators_drawSizeX, i_hitindicators_drawPosY - i_hitindicators_ePlayerHurt_strSizeY / 2, i_hitindicators_ePlayerHurt_drawColorRed, i_hitindicators_ePlayerHurt_drawColorGreen, i_hitindicators_ePlayerHurt_drawColorBlue, math.floor(f_hitindicators_drawCurrentAlpha * i_hitindicators_ePlayerHurt_drawColorAlpha / 255), "+", 0, string.format("%d [%d]", i_hitindicators_ePlayerHurt_kDmg_Health, i_hitindicators_ePlayerHurt_kHealth))
                 end
                 --
                 --
@@ -102,7 +102,7 @@ function func_hitindicators_draw()
                 if bit.band(i_hitindicators_e_index, 2) == 2 then
                     local i_hitindicators_ePlayerDeath_strSizeX, i_hitindicators_ePlayerDeath_strSizeY = renderer.measure_text("+", "K")
                     
-                    renderer.text(i_hitindicators_drawPosX - f_hitindicators_drawSizeX - i_hitindicators_ePlayerDeath_strSizeX, i_hitindicators_drawPosY - i_hitindicators_ePlayerDeath_strSizeY / 2, i_hitindicators_ePlayerDeath_drawColorRed, i_hitindicators_ePlayerDeath_drawColorGreen, i_hitindicators_ePlayerDeath_drawColorBlue, math.floor(f_hitindicators_drawCurrentAlpha * i_hitindicators_ePlayerDeath_drawColorAlpha / 255), "+", 0, "K")
+                    renderer.text(i_hitindicators_drawPosX - i_hitindicators_drawSizeX - i_hitindicators_ePlayerDeath_strSizeX, i_hitindicators_drawPosY - i_hitindicators_ePlayerDeath_strSizeY / 2, i_hitindicators_ePlayerDeath_drawColorRed, i_hitindicators_ePlayerDeath_drawColorGreen, i_hitindicators_ePlayerDeath_drawColorBlue, math.floor(f_hitindicators_drawCurrentAlpha * i_hitindicators_ePlayerDeath_drawColorAlpha / 255), "+", 0, "K")
                 end
                 --
                 --
@@ -111,7 +111,7 @@ function func_hitindicators_draw()
                 --
                 if bit.band(i_hitindicators_e_index, 4) == 4 then
                     local i_hitindicators_ePlayerDeath_kHeadshot_strSizeX, i_hitindicators_ePlayerDeath_kHeadshot_strSizeY = renderer.measure_text("+", "H")
-                    renderer.text(i_hitindicators_drawPosX - f_hitindicators_drawSizeX - i_hitindicators_ePlayerDeath_kHeadshot_strSizeX * 2, i_hitindicators_drawPosY - i_hitindicators_ePlayerDeath_kHeadshot_strSizeY / 2, i_hitindicators_ePlayerDeath_kHeadshot_drawColorRed, i_hitindicators_ePlayerDeath_kHeadshot_drawColorGreen, i_hitindicators_ePlayerDeath_kHeadshot_drawColorBlue, math.floor(f_hitindicators_drawCurrentAlpha * i_hitindicators_ePlayerDeath_kHeadshot_drawColorAlpha / 255), "+", 0, "H")
+                    renderer.text(i_hitindicators_drawPosX - i_hitindicators_drawSizeX - i_hitindicators_ePlayerDeath_kHeadshot_strSizeX * 2, i_hitindicators_drawPosY - i_hitindicators_ePlayerDeath_kHeadshot_strSizeY / 2, i_hitindicators_ePlayerDeath_kHeadshot_drawColorRed, i_hitindicators_ePlayerDeath_kHeadshot_drawColorGreen, i_hitindicators_ePlayerDeath_kHeadshot_drawColorBlue, math.floor(f_hitindicators_drawCurrentAlpha * i_hitindicators_ePlayerDeath_kHeadshot_drawColorAlpha / 255), "+", 0, "H")
                 end
                 --
                 --
@@ -120,7 +120,7 @@ function func_hitindicators_draw()
                 --
                 if bit.band(i_hitindicators_e_index, 8) == 8 then
                     local i_hitindicators_ePlayerDeath_kPenetrated_strSizeX, i_hitindicators_ePlayerDeath_kPenetrated_strSizeY = renderer.measure_text("+", "H")
-                    renderer.text(i_hitindicators_drawPosX - f_hitindicators_drawSizeX - i_hitindicators_ePlayerDeath_kPenetrated_strSizeX * 3, i_hitindicators_drawPosY - i_hitindicators_ePlayerDeath_kPenetrated_strSizeY / 2, i_hitindicators_ePlayerDeath_kPenetrated_drawColorRed, i_hitindicators_ePlayerDeath_kPenetrated_drawColorGreen, i_hitindicators_ePlayerDeath_kPenetrated_drawColorBlue, math.floor(f_hitindicators_drawCurrentAlpha * i_hitindicators_ePlayerDeath_kPenetrated_drawColorAlpha / 255), "+", 0, "P")
+                    renderer.text(i_hitindicators_drawPosX - i_hitindicators_drawSizeX - i_hitindicators_ePlayerDeath_kPenetrated_strSizeX * 3, i_hitindicators_drawPosY - i_hitindicators_ePlayerDeath_kPenetrated_strSizeY / 2, i_hitindicators_ePlayerDeath_kPenetrated_drawColorRed, i_hitindicators_ePlayerDeath_kPenetrated_drawColorGreen, i_hitindicators_ePlayerDeath_kPenetrated_drawColorBlue, math.floor(f_hitindicators_drawCurrentAlpha * i_hitindicators_ePlayerDeath_kPenetrated_drawColorAlpha / 255), "+", 0, "P")
                 end
             end
         else
@@ -129,7 +129,7 @@ function func_hitindicators_draw()
             i_hitindicators_ePlayerHurt_index = 0
             i_hitindicators_ePlayerHurt_index = 0
             i_hitindicators_ePlayerDeath_kHeadshot_index = 0
-            f_hitindicators_drawCurrentAlpha = f_hitindicators_drawStartAlpha
+            f_hitindicators_drawCurrentAlpha = i_hitindicators_drawStartAlpha
         end
     end
 end
@@ -152,7 +152,7 @@ function func_hitindicators_event_playerHurt(event)
             i_hitindicators_e_index = i_hitindicators_ePlayerHurt_index + i_hitindicators_ePlayerDeath_index + i_hitindicators_ePlayerDeath_kHeadshot_index + i_hitindicators_ePlayerDeath_kPenetrated_index
 
             f_hitindicators_e_timestamp = globals.curtime()
-            f_hitindicators_drawCurrentAlpha = f_hitindicators_drawStartAlpha
+            f_hitindicators_drawCurrentAlpha = i_hitindicators_drawStartAlpha
 
             i_hitindicators_ePlayerHurt_kHealth = event.health
             i_hitindicators_ePlayerHurt_kDmg_Health = event.dmg_health
@@ -177,7 +177,7 @@ function func_hitindicators_event_playerDeath(event)
             i_hitindicators_e_index = i_hitindicators_ePlayerHurt_index + i_hitindicators_ePlayerDeath_index + i_hitindicators_ePlayerDeath_kHeadshot_index + i_hitindicators_ePlayerDeath_kPenetrated_index
 
             f_hitindicators_e_timestamp = globals.curtime()
-            f_hitindicators_drawCurrentAlpha = f_hitindicators_drawStartAlpha
+            f_hitindicators_drawCurrentAlpha = i_hitindicators_drawStartAlpha
         end
     end
     --
@@ -193,7 +193,7 @@ function func_hitindicators_event_playerDeath(event)
                 i_hitindicators_e_index = i_hitindicators_ePlayerHurt_index + i_hitindicators_ePlayerDeath_index + i_hitindicators_ePlayerDeath_kHeadshot_index + i_hitindicators_ePlayerDeath_kPenetrated_index
 
                 f_hitindicators_e_timestamp = globals.curtime()
-                f_hitindicators_drawCurrentAlpha = f_hitindicators_drawStartAlpha
+                f_hitindicators_drawCurrentAlpha = i_hitindicators_drawStartAlpha
             end
         else
             i_hitindicators_ePlayerDeath_kHeadshot_index = 0
@@ -212,7 +212,7 @@ function func_hitindicators_event_playerDeath(event)
                 i_hitindicators_e_index = i_hitindicators_ePlayerHurt_index + i_hitindicators_ePlayerDeath_index + i_hitindicators_ePlayerDeath_kHeadshot_index + i_hitindicators_ePlayerDeath_kPenetrated_index
 
                 f_hitindicators_e_timestamp = globals.curtime()
-                f_hitindicators_drawCurrentAlpha = f_hitindicators_drawStartAlpha
+                f_hitindicators_drawCurrentAlpha = i_hitindicators_drawStartAlpha
             end
         else
             i_hitindicators_ePlayerDeath_kPenetrated_index = 0

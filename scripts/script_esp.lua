@@ -7,57 +7,57 @@ local maf = require("lib_maf")
 
 -- [Configuration] --------------------------------------------------------------- [Description] ---------------------------------------------------------------
 
-    b_esp_enable                                           = true               -- <true/false> Master Switch
+    b_esp_enable                                            = true              -- <true/false> Master Switch
 
-    b_esp_filter_player                                    = true               -- <true/false> Draw players ESP
-    i_esp_filter_playerMode                                = 0                  -- <0/1> Seperate player colors by (relationship/team)
-    b_esp_filter_playerEnemy                               = true               -- <true/false> Draw enemy players ESP
-    b_esp_filter_playerAlly                                = false              -- <true/false> Draw ally players ESP
-    b_esp_filter_playerT                                   = true               -- <true/false> Draw Terrorist Team players ESP
-    b_esp_filter_playerCT                                  = true               -- <true/false> Draw Counter-Terrorist Team players ESP
+    b_esp_filter_player                                     = true              -- <true/false> Draw players ESP
+    i_esp_filter_playerMode                                 = 0                 -- <0/1> Seperate player colors by (relationship/team)
+    b_esp_filter_playerEnemy                                = true              -- <true/false> Draw enemy players ESP
+    b_esp_filter_playerAlly                                 = false             -- <true/false> Draw ally players ESP
+    b_esp_filter_playerT                                    = true              -- <true/false> Draw Terrorist Team players ESP
+    b_esp_filter_playerCT                                   = true              -- <true/false> Draw Counter-Terrorist Team players ESP
 
-    b_esp_filter_weapon                                    = true               -- <true/false> Draw weapon Entities ESP
-    b_esp_filter_mapObjective                              = true               -- <true/false> Draw map objective Entities ESP (Defuse/Rescue Kit and C4)
-    b_esp_filter_other                                     = false              -- <true/false> Draw all other Entities
+    b_esp_filter_weapon                                     = true              -- <true/false> Draw weapon Entities ESP
+    b_esp_filter_mapObjective                               = true              -- <true/false> Draw map objective Entities ESP (Defuse/Rescue Kit and C4)
+    b_esp_filter_other                                      = false             -- <true/false> Draw all other Entities
 
-    f_esp_anchorScreenX                                    = 0.5                -- <0.0 ... 1.0> Snaplines Anchor X screen offset (in %) //TODO: Add limitations
-    f_esp_anchorScreenY                                    = 0.5                -- <0.0 ... 1.0> Snaplines Anchor Y screen offset (in %) //TODO: Add limitations
-    i_esp_paddingScreenXY                                  = 128                -- <0 ... min(client.screen_size())> ESP Screen padding (in px) //TODO: Add limitations
+    f_esp_anchorScreenX                                     = 0.5               -- <0.0 ... 1.0> Snaplines Anchor X screen offset (in %) //TODO: Add limitations
+    f_esp_anchorScreenY                                     = 0.5               -- <0.0 ... 1.0> Snaplines Anchor Y screen offset (in %) //TODO: Add limitations
+    i_esp_paddingScreenXY                                   = 128               -- <0 ... min(client.screen_size())> ESP Screen padding (in px) //TODO: Add limitations
 
-    i_esp_draw_box                                         = 1                  -- <0/1> Draws 3D (Pitch & Yaw & Roll Rotated) box //TODO: Fix Gimbal Lock issue
-    b_esp_draw_snapline                                    = true               -- <true/false> Draw Snapline
-    b_esp_draw_snaplineEndPoint                            = true               -- <true/false> Draw Snapline Endpoint
-    b_esp_draw_name                                        = true               -- <true/false> Draw Entity <classname/name>
-    b_esp_draw_health                                      = true               -- <true/false> Draw Entity health (if present)
-    b_esp_draw_armor                                       = true               -- <true/false> Draw Entity armor (if present)
-    b_esp_draw_weapons                                     = true               -- <true/false> Draw Entity weapons (if present)
-    b_esp_draw_ammo                                        = true               -- <true/false> Draw Entity ammo (if present)
-    b_esp_draw_distance                                    = true               -- <true/false> Draw distance to Entity
-    b_esp_draw_state                                       = true               -- <true/false> Draw Entity state (if present)
-    b_esp_draw_navlocation                                 = true               -- <true/false> Draw Entity NAV location (if present)
+    i_esp_draw_box                                          = 1                 -- <0/1> Draws 3D (Pitch & Yaw & Roll Rotated) box //TODO: Fix Gimbal Lock issue
+    b_esp_draw_snapline                                     = true              -- <true/false> Draw Snapline
+    b_esp_draw_snaplineEndPoint                             = true              -- <true/false> Draw Snapline Endpoint
+    b_esp_draw_name                                         = true              -- <true/false> Draw Entity <classname/name>
+    b_esp_draw_health                                       = true              -- <true/false> Draw Entity health (if present)
+    b_esp_draw_armor                                        = true              -- <true/false> Draw Entity armor (if present)
+    b_esp_draw_weapons                                      = true              -- <true/false> Draw Entity weapons (if present)
+    b_esp_draw_ammo                                         = true              -- <true/false> Draw Entity ammo (if present)
+    b_esp_draw_distance                                     = true              -- <true/false> Draw distance to Entity
+    b_esp_draw_state                                        = true              -- <true/false> Draw Entity state (if present)
+    b_esp_draw_navlocation                                  = true              -- <true/false> Draw Entity NAV location (if present)
 
-    b_esp_filter_playerEnemy_accentColor01                 = {255, 0, 170, 255} -- <array typeof char> Invisible enemy players color
-    b_esp_filter_playerEnemy_accentColor02                 = {170, 255, 0, 255} -- <array typeof char> Visible enemy players color
-    b_esp_filter_playerAlly_accentColor01                  = {0, 170, 255, 255} -- <array typeof char> Invisible ally players color
-    b_esp_filter_playerAlly_accentColor02                  = {0, 255, 170, 255} -- <array typeof char> Visible ally players color
-    b_esp_filter_playerT_accentColor01                     = {255, 0, 170, 255} -- <array typeof char> Invisible Terrorist Team players color
-    b_esp_filter_playerT_accentColor02                     = {170, 255, 0, 255} -- <array typeof char> Visible Terrorist Team players color
-    b_esp_filter_playerCT_accentColor01                    = {0, 170, 255, 255} -- <array typeof char> Invisible Counter-Terrorist Team players color
-    b_esp_filter_playerCT_accentColor02                    = {0, 255, 170, 255} -- <array typeof char> Visible Counter-Terrorist Team players color
-    b_esp_filter_weapons_accentColor01                     = {127, 127, 127, 63}-- <array typeof char> Invisible weapon Entities color
-    b_esp_filter_weapons_accentColor02                     = {255, 255, 255, 63}-- <array typeof char> Visible weapon Entities color
-    b_esp_filter_mapObjective_accentColor01                = {}                 -- <array typeof char> Invisible map objective Entities color
-    b_esp_filter_mapObjective_accentColor02                = {}                 -- <array typeof char> Visible map objective Entities color
-    b_esp_filter_other_accentColor01                       = {127, 127, 127, 63}-- <array typeof char> Invisible all other Entities color
-    b_esp_filter_other_accentColor02                       = {255, 255, 255, 63}-- <array typeof char> Visible all other Entities color
+    b_esp_filter_playerEnemy_accentColor01                  = {255, 0, 170, 255} -- <array typeof uInt8_t> Invisible enemy players color
+    b_esp_filter_playerEnemy_accentColor02                  = {170, 255, 0, 255} -- <array typeof uInt8_t> Visible enemy players color
+    b_esp_filter_playerAlly_accentColor01                   = {0, 170, 255, 255} -- <array typeof uInt8_t> Invisible ally players color
+    b_esp_filter_playerAlly_accentColor02                   = {0, 255, 170, 255} -- <array typeof uInt8_t> Visible ally players color
+    b_esp_filter_playerT_accentColor01                      = {255, 0, 170, 255} -- <array typeof uInt8_t> Invisible Terrorist Team players color
+    b_esp_filter_playerT_accentColor02                      = {170, 255, 0, 255} -- <array typeof uInt8_t> Visible Terrorist Team players color
+    b_esp_filter_playerCT_accentColor01                     = {0, 170, 255, 255} -- <array typeof uInt8_t> Invisible Counter-Terrorist Team players color
+    b_esp_filter_playerCT_accentColor02                     = {0, 255, 170, 255} -- <array typeof uInt8_t> Visible Counter-Terrorist Team players color
+    b_esp_filter_weapons_accentColor01                      = {127, 127, 127, 63}-- <array typeof uInt8_t> Invisible weapon Entities color
+    b_esp_filter_weapons_accentColor02                      = {255, 255, 255, 63}-- <array typeof uInt8_t> Visible weapon Entities color
+    b_esp_filter_mapObjective_accentColor01                 = {}                 -- <array typeof uInt8_t> Invisible map objective Entities color
+    b_esp_filter_mapObjective_accentColor02                 = {}                 -- <array typeof uInt8_t> Visible map objective Entities color
+    b_esp_filter_other_accentColor01                        = {127, 127, 127, 63}-- <array typeof uInt8_t> Invisible all other Entities color
+    b_esp_filter_other_accentColor02                        = {255, 255, 255, 63}-- <array typeof uInt8_t> Visible all other Entities color
 
 -- ["Do not edit below this line"] -----------------------------------------------------------------------------------------------------------------------------
 -- [Calculated configuration] ----------------------------------------------------------------------------------------------------------------------------------
 
-    entIndex_localEntCCSPlayer                             = entity.get_local_player()
-    entIndex_localEntCCSPlayer_kTeamid                     = entity.get_prop(entIndex_localEntCCSPlayer, "m_iTeamNum", array_index)
+    entIndex_localEntCCSPlayer                              = entity.get_local_player()
+    entIndex_localEntCCSPlayer_kTeamid                      = entity.get_prop(entIndex_localEntCCSPlayer, "m_iTeamNum", array_index)
     i_esp_drawScreenWidth,
-    i_esp_drawScreenHeight                                 = client.screen_size()
+    i_esp_drawScreenHeight                                  = client.screen_size()
 
 -- [Functions] -------------------------------------------------------------------------------------------------------------------------------------------------
 
