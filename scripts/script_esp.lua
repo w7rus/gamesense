@@ -34,6 +34,13 @@ local entity_get_prop = entity.get_prop
 local string_find = string.find
 local string_match = string.match
 
+local client_draw_hitboxes = client.draw_hitboxes
+local client_userid_to_entindex = client.userid_to_entindex
+local client_screen_size = client.screen_size
+
+local globals_tickinterval = globals.tickinterval
+local globals_frametime = globals.frametime
+
 -- [About]------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Made by: w7rus (Astolfo)
 -- Credits: Aviarita [lib_gamesense]
@@ -57,6 +64,8 @@ local string_match = string.match
     local ref_extesp_snaplineStartY                                             = ui_new_slider("VISUALS", "Player ESP", "Any > Snapline (Start Y)", 0, 100, 50, true, "%", 1)
     local ref_extesp_originPoint                                                = ui_new_checkbox("VISUALS", "Player ESP", "Any > Origin Point")
     local ref_extesp_skeleton                                                   = ui_new_checkbox("VISUALS", "Player ESP", "Any > Skeleton")
+    local ref_extesp_hitbox                                                     = ui_new_multiselect("VISUALS", "Player ESP", "Any > Hitbox", {"Head", "Neck", "Spine 1", "Spine 2", "Spine 3", "Spine 4", "Pelvis", "Arm Upper L", "Arm Upper R", "Arm Lower L", "Arm Lower R", "Hand L", "Hand R", "Leg Upper L", "Leg Upper R", "Leg Lower L", "Leg Lower R", "Foot L", "Foot R"})
+    local ref_extesp_hitbox_antiflicker                                         = ui_new_slider("VISUALS", "Player ESP", "Any > Hitbox > Antiflicker History", 1, 128, 1, true, "f.", 1)
     local ref_extesp_name                                                       = ui_new_checkbox("VISUALS", "Player ESP", "Any > Name/Classname")
     local ref_extesp_health                                                     = ui_new_checkbox("VISUALS", "Player ESP", "Any > Health")
     local ref_extesp_armor                                                      = ui_new_checkbox("VISUALS", "Player ESP", "Any > Armor")
@@ -267,8 +276,41 @@ local string_match = string.match
 
 -- [Calculated configuration] ----------------------------------------------------------------------------------------------------------------------------------
 
-    i_esp_drawScreenWidth,
-    i_esp_drawScreenHeight                                  = client.screen_size()
+    local i_esp_drawScreenWidth,
+          i_esp_drawScreenHeight                                                = client_screen_size()
+    local i_extesp_tickinterval                                                 = globals_tickinterval()
+    local i_extesp_tickrate                                                     = 1 / i_extesp_tickinterval
+    local i_extesp_frametime                                                    = nil
+    local t_extesp_frametime_history                                            = {}
+    local i_extesp_absframetime                                                 = nil
+
+    ui.set_callback(ref_extesp_hitbox_antiflicker, function()
+        for i in pairs(t_extesp_frametime_history) do
+            t_extesp_frametime_history[i] = nil
+        end
+    end)
+
+    t_extesp_playerBoneTable = {
+        [0] = "Head",
+        [1] = "Neck",
+        [2] = "Pelvis",
+        [3] = "Spine 4",
+        [4] = "Spine 3",
+        [5] = "Spine 2",
+        [6] = "Spine 1",
+        [7] = "Leg Upper L",
+        [8] = "Leg Upper R",
+        [9] = "Leg Lower L",
+        [10] = "Leg Lower R",
+        [11] = "Foot L",
+        [12] = "Foot R",
+        [13] = "Hand L",
+        [14] = "Hand R",
+        [15] = "Arm Upper L",
+        [17] = "Arm Upper R",
+        [16] = "Arm Lower L",
+        [18] = "Arm Lower R",
+    }
 
 -- [Functions] -------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -391,6 +433,12 @@ local table_contains_str = function(table, str)
         if v == str then
             return true
         end
+    end
+    return false
+end
+local table_is_empty = function(table)
+    if next(table) == nil then
+        return true
     end
     return false
 end
@@ -795,6 +843,7 @@ local func_extesp_skeleton = function(entIndex_serverEntCCSPlayer, accentColor01
             if vec_serverEntCCSPlayer_ScreenPosTable[i].x == nil or vec_serverEntCCSPlayer_ScreenPosTable[i].y == nil then
                 return
             end
+            -- renderer.text(vec_serverEntCCSPlayer_ScreenPosTable[i].x, vec_serverEntCCSPlayer_ScreenPosTable[i].y, 255, 255, 255, 255, nil, 0, i)
         end
 
         b_serverEntCCSPlayer_IsVisible = false
@@ -835,6 +884,30 @@ local func_extesp_skeleton = function(entIndex_serverEntCCSPlayer, accentColor01
 
         renderer_line(vec_serverEntCCSPlayer_ScreenPosTable[9].x, vec_serverEntCCSPlayer_ScreenPosTable[9].y, vec_serverEntCCSPlayer_ScreenPosTable[11].x, vec_serverEntCCSPlayer_ScreenPosTable[11].y, Color.r, Color.g, Color.b, Color.a)
         renderer_line(vec_serverEntCCSPlayer_ScreenPosTable[11].x, vec_serverEntCCSPlayer_ScreenPosTable[11].y, vec_serverEntCCSPlayer_ScreenPosTable[13].x, vec_serverEntCCSPlayer_ScreenPosTable[13].y, Color.r, Color.g, Color.b, Color.a)
+    end
+end
+local func_extesp_hitbox = function(entIndex_serverEntCCSPlayer, accentColor01, accentColor02)
+    if not(table_is_empty(ui_get(ref_extesp_hitbox))) then
+        local obj_serverEntCCSPlayer = Player(entIndex_serverEntCCSPlayer)
+        local obj_localEntCCSPlayer = Player(entIndex_localEntCCSPlayer)
+
+        b_serverEntCCSPlayer_IsVisible = false
+
+        b_serverEntCCSPlayer_IsVisible = obj_localEntCCSPlayer:can_see_point(obj_serverEntCCSPlayer:get_hitbox_pos("head_0"))
+
+        local Color = {r, g, b, a};
+
+        if b_serverEntCCSPlayer_IsVisible == true then
+            Color.r, Color.g, Color.b, Color.a = accentColor02[1], accentColor02[2], accentColor02[3], accentColor02[4]
+        else
+            Color.r, Color.g, Color.b, Color.a = accentColor01[1], accentColor01[2], accentColor01[3], accentColor01[4]
+        end
+
+        for i = 0, 18 do
+            if table_contains_str(ui_get(ref_extesp_hitbox), t_extesp_playerBoneTable[i]) then
+                client_draw_hitboxes(entIndex_serverEntCCSPlayer, i_extesp_absframetime, i, Color.r, Color.g, Color.b, Color.a)
+            end
+        end
     end
 end
 local func_extesp_CCSPlayerInfo = function(entIndex_serverEntCCSPlayer, accentColor01, accentColor02, i_esp_anchorPosX, i_esp_anchorPosY)
@@ -1532,6 +1605,18 @@ function func_extesp_eDraw(ctx)
         return
     end
 
+    if not(table_is_empty(ui_get(ref_extesp_hitbox))) then
+        i_extesp_frametime = globals_frametime()
+
+        table.insert(t_extesp_frametime_history, i_extesp_frametime)
+
+        if #t_extesp_frametime_history > ui_get(ref_extesp_hitbox_antiflicker) then
+            table.remove(t_extesp_frametime_history, 1)
+        end
+
+        i_extesp_absframetime = math_max(unpack(t_extesp_frametime_history))
+    end
+
     local i_esp_anchorPosX = math_floor(i_esp_drawScreenWidth * (ui_get(ref_extesp_snaplineStartX) / 100))
     local i_esp_anchorPosY = math_floor(i_esp_drawScreenHeight * (ui_get(ref_extesp_snaplineStartY) / 100))
     i_esp_anchorPosX = math_min(i_esp_drawScreenWidth - ui_get(ref_extesp_padding), math_max(ui_get(ref_extesp_padding), i_esp_anchorPosX))
@@ -1563,6 +1648,7 @@ function func_extesp_eDraw(ctx)
                             func_extesp_boundingBoxStatic(entIndex_serverEntCCSPlayer, b_esp_filter_playerEnemy_accentColor01, b_esp_filter_playerEnemy_accentColor02)
                             func_extesp_CCSPlayerInfo(entIndex_serverEntCCSPlayer, b_esp_filter_playerEnemy_accentColor01, b_esp_filter_playerEnemy_accentColor02, i_esp_anchorPosX, i_esp_anchorPosY)
                             func_extesp_skeleton(entIndex_serverEntCCSPlayer, b_esp_filter_playerEnemy_accentColor01, b_esp_filter_playerEnemy_accentColor02)
+                            func_extesp_hitbox(entIndex_serverEntCCSPlayer, b_esp_filter_playerEnemy_accentColor01, b_esp_filter_playerEnemy_accentColor02)
                         end
                     end
 
@@ -1572,6 +1658,7 @@ function func_extesp_eDraw(ctx)
                             func_extesp_boundingBoxStatic(entIndex_serverEntCCSPlayer, b_esp_filter_playerAlly_accentColor01, b_esp_filter_playerAlly_accentColor02)
                             func_extesp_CCSPlayerInfo(entIndex_serverEntCCSPlayer, b_esp_filter_playerAlly_accentColor01, b_esp_filter_playerAlly_accentColor02, i_esp_anchorPosX, i_esp_anchorPosY)
                             func_extesp_skeleton(entIndex_serverEntCCSPlayer, b_esp_filter_playerAlly_accentColor01, b_esp_filter_playerAlly_accentColor02)
+                            func_extesp_hitbox(entIndex_serverEntCCSPlayer, b_esp_filter_playerAlly_accentColor01, b_esp_filter_playerAlly_accentColor02)
                         end
                     end
                 end
@@ -1591,6 +1678,7 @@ function func_extesp_eDraw(ctx)
                             func_extesp_boundingBoxStatic(entIndex_serverEntCCSPlayer, b_esp_filter_playerT_accentColor01, b_esp_filter_playerT_accentColor02)
                             func_extesp_CCSPlayerInfo(entIndex_serverEntCCSPlayer, b_esp_filter_playerT_accentColor01, b_esp_filter_playerT_accentColor02, i_esp_anchorPosX, i_esp_anchorPosY)
                             func_extesp_skeleton(entIndex_serverEntCCSPlayer, b_esp_filter_playerT_accentColor01, b_esp_filter_playerT_accentColor02)
+                            func_extesp_hitbox(entIndex_serverEntCCSPlayer, b_esp_filter_playerT_accentColor01, b_esp_filter_playerT_accentColor02)
                         end
                     end
 
@@ -1600,6 +1688,7 @@ function func_extesp_eDraw(ctx)
                             func_extesp_boundingBoxStatic(entIndex_serverEntCCSPlayer, b_esp_filter_playerCT_accentColor01, b_esp_filter_playerCT_accentColor02)
                             func_extesp_CCSPlayerInfo(entIndex_serverEntCCSPlayer, b_esp_filter_playerCT_accentColor01, b_esp_filter_playerCT_accentColor02, i_esp_anchorPosX, i_esp_anchorPosY)
                             func_extesp_skeleton(entIndex_serverEntCCSPlayer, b_esp_filter_playerCT_accentColor01, b_esp_filter_playerCT_accentColor02)
+                            func_extesp_hitbox(entIndex_serverEntCCSPlayer, b_esp_filter_playerCT_accentColor01, b_esp_filter_playerCT_accentColor02)
                         end
                     end
                 end
@@ -1795,6 +1884,15 @@ function func_extesp_eDraw(ctx)
     end
 end
 
+local function func_extesp_ePlayerConnectFull(event)
+    local entIndex_localEntCCSPlayer = entity_get_local_player()
+    if client_userid_to_entindex(event.userid) == entIndex_localEntCCSPlayer then
+        i_extesp_tickinterval = globals_tickinterval()
+        i_extesp_tickrate = 1 / i_extesp_tickinterval
+    end
+end
+
+client.set_event_callback("player_connect_full", func_extesp_ePlayerConnectFull)
 client.set_event_callback("paint", func_extesp_eDraw)
 
 -- [End of file] -----------------------------------------------------------------------------------------------------------------------------------------------
