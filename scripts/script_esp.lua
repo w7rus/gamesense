@@ -5,7 +5,6 @@ local ui_new_checkbox = ui.new_checkbox
 local ui_new_combobox = ui.new_combobox
 local ui_new_multiselect = ui.new_multiselect
 local ui_new_slider = ui.new_slider
-local ui_new_button = ui.new_button
 local ui_new_color_picker = ui.new_color_picker
 local ui_set_callback = ui.set_callback
 local ui_get = ui.get
@@ -1544,13 +1543,13 @@ local func_extesp_CAnyInfo = function(entIndex_serverEntCAny, accentColor01, acc
             elseif entity_get_classname(entIndex_serverEntCAny) == "CDecoyProjectile" then
                 str_esp_draw_name = "Decoy"
             elseif entity_get_classname(entIndex_serverEntCAny) == "CMolotovProjectile" then
-                if entity_get_prop(entIndex_serverEntCAny, "m_nModelIndex", array_index) == 39 then
+                if entity_get_prop(entIndex_serverEntCAny, "m_bIsIncGrenade", array_index) == 1 then
                     str_esp_draw_name = "Incendiary"
                 else
                     str_esp_draw_name = "Molotov"
                 end
             elseif entity_get_classname(entIndex_serverEntCAny) == "CBaseCSGrenadeProjectile" then
-                if entity_get_prop(entIndex_serverEntCAny, "m_nModelIndex", array_index) == 41 then
+                if entity_get_prop(entIndex_serverEntCAny, "m_DmgRadius", array_index) == 350 then
                     str_esp_draw_name = "HE Grenade"
                 else
                     str_esp_draw_name = "Flashbang"
@@ -1835,7 +1834,7 @@ function func_extesp_eDraw(ctx)
                         end
 
                         if entity_get_classname(entIndex_serverEntCProjectile) == "CBaseCSGrenadeProjectile" then
-                            if entity_get_prop(entIndex_serverEntCProjectile, "m_nModelIndex", array_index) == 41 then
+                            if entity_get_prop(entIndex_serverEntCProjectile, "m_DmgRadius", array_index) == 350 then
                                 func_extesp_snapline(entIndex_serverEntCProjectile, b_esp_filter_projectile_stHEG_accentColor01, b_esp_filter_projectile_stHEG_accentColor02, i_esp_anchorPosX, i_esp_anchorPosY)
                                 func_extesp_boundingBoxStatic(entIndex_serverEntCProjectile, b_esp_filter_projectile_stHEG_accentColor01, b_esp_filter_projectile_stHEG_accentColor02)
                                 func_extesp_CAnyInfo(entIndex_serverEntCProjectile, b_esp_filter_projectile_stHEG_accentColor01, b_esp_filter_projectile_stHEG_accentColor02, i_esp_anchorPosX, i_esp_anchorPosY)
